@@ -18,7 +18,6 @@
             <a>Apriandhita Aries Prayoga</a><br>
             <a>Kumara Sahasika Laksmana</a>
         </div>
-
         <h1 class="mb-4">Form Input</h1>
         <form method="post" id="form-input">
             <div class="col-md-6">
@@ -32,18 +31,16 @@
             <br><button type="submit" class="btn btn-success">Submit</button>
         </form>
         <div id="tableContainer"></div>
-
     </div>
 
     <script>
         $(document).ready(function () {
             $("#form-input").submit(function (e) {
                 e.preventDefault();
-                // Mengambil data dari form
+                
                 var numberInput = $("#numberInput").val();
                 var textInput = $("#textInput").val();
 
-                // Mengirim data ke PHP dengan AJAX
                 $.ajax({
                     url: "data.php",
                     type: "POST",
@@ -53,7 +50,6 @@
                     },
                     dataType: "json",
                     success: function (response) {
-                        // Mengubah array JSON menjadi tabel HTML dan menampilkan dengan animasi
                         var table = '<table class="table"><thead><tr><th>Index</th><th>Teks</th></tr></thead><tbody>';
                         for (var i = 0; i < response.length; i++) {
                             table += "<tr><td>" + (i) + "</td><td>" + response[i] + "</td></tr>";
