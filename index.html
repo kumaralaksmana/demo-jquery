@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tugas AJAX dan Manupulasi DOM</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container my-5">
+        <div class="alert alert-success text-center" role="alert">
+            <a class="alert-link">Nama Anggota Kelompok:</a><br>
+            <a>Apriandhita Aries Prayoga</a><br>
+            <a>Kumara Sahasika Laksmana</a>
+        </div>
+
+        <h1 class="mb-4">Form Input</h1>
+        <form method="post" id="form-input">
+            <div class="col-md-6">
+                <label for="numberInput" class="form-label">Jumlah Perulangan</label>
+                <input type="number" class="form-control" id="numberInput">
+            </div>
+            <div class="col-md-6">
+                <label for="textInput" class="form-label">Teks</label>
+                <input type="text" class="form-control" id="textInput">
+            </div>
+            <br><button type="submit" class="btn btn-success">Submit</button>
+        </form>
+        <div id="tableContainer"></div>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#form-input").submit(function (e) {
+                e.preventDefault();
+                // Mengambil data dari form
+                var numberInput = $("#numberInput").val();
+                var textInput = $("#textInput").val();
+
+                // Mengirim data ke PHP dengan AJAX
+                $.ajax({
+                    url: "data.php",
+                    type: "POST",
+                    data: {
+                        numberInput: numberInput,
+                        textInput: textInput,
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        // Mengubah array JSON menjadi tabel HTML dan menampilkan dengan animasi
+                        var table = '<table class="table"><thead><tr><th>Index</th><th>Teks</th></tr></thead><tbody>';
+                        for (var i = 0; i < response.length; i++) {
+                            table += "<tr><td>" + (i) + "</td><td>" + response[i] + "</td></tr>";
+                        }
+                        table += "</tbody></table>";
+                        $("#tableContainer").hide().html(table).slideDown();
+                    },
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
